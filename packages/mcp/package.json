@@ -15,18 +15,36 @@
     "./server": {
       "types": "./dist/server.d.ts",
       "default": "./dist/server.js"
+    },
+    "./http": {
+      "types": "./dist/http.d.ts",
+      "default": "./dist/http.js"
     }
   },
   "bin": {
-    "trust-ledger-os-mcp": "./dist/server.js"
+    "trust-ledger-os-mcp": "./dist/server.js",
+    "trust-ledger-os-mcp-http": "./dist/http.js"
   },
-  "files": ["dist", "README.md"],
+  "files": [
+    "dist",
+    "README.md",
+    "server.json",
+    "!dist/**/*.test.js",
+    "!dist/**/*.test.d.ts",
+    "!dist/**/*.test.js.map",
+    "!dist/**/*.test.d.ts.map"
+  ],
   "scripts": {
     "build": "tsc -p tsconfig.json",
     "start": "node dist/server.js",
+    "http": "node dist/http.js",
+    "test": "npm run build && node --test dist/*.test.js && node scripts/smoke-stdio.mjs && node scripts/smoke-http.mjs",
+    "smoke:http": "node scripts/smoke-http.mjs",
+    "smoke:stdio": "node scripts/smoke-stdio.mjs",
     "prepack": "npm run build"
   },
   "devDependencies": {
+    "@types/node": "^24.0.0",
     "typescript": "^5.9.0"
   },
   "publishConfig": {

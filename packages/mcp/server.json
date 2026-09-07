@@ -1,0 +1,30 @@
+{
+  "$schema": "https://static.modelcontextprotocol.io/schemas/server.schema.json",
+  "name": "io.github.cubiczan/trust-ledger-os-mcp",
+  "description": "Trust Ledger OS catalog: phases, routes, packages, and manifest.",
+  "version": "0.1.2",
+  "packages": [
+    {
+      "registryType": "npm",
+      "identifier": "trust-ledger-os-mcp",
+      "version": "0.1.2",
+      "transport": {
+        "type": "stdio"
+      }
+    }
+  ],
+  "remotes": [
+    {
+      "type": "streamable-http",
+      "url": "https://{MCP_HTTP_HOST}/mcp",
+      "headers": [
+        {
+          "name": "Authorization",
+          "value": "Bearer {MCP_BEARER_TOKEN}",
+          "isRequired": true,
+          "isSecret": true
+        }
+      ]
+    }
+  ]
+}
