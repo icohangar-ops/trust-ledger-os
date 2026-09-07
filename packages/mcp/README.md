@@ -2,8 +2,6 @@
 
 MCP-ready package surface for Trust Ledger OS.
 
-Published version: `trust-ledger-os-mcp@0.1.2`
-
 ## Publish
 
 - Build: `npm --prefix packages/mcp run build`
@@ -22,3 +20,7 @@ Published version: `trust-ledger-os-mcp@0.1.2`
 ## Goal
 
 Expose the roadmap and distribution metadata in an agent-friendly shape that can be wired into any MCP runtime later.
+
+## Stdio transport (Glama)
+
+Stdout uses NDJSON (one JSON object per line). Do not log to stdout. Prefer compiled server entry for Glama.
