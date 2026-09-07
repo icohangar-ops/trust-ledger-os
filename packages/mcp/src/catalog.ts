@@ -1,3 +1,8 @@
+export const SERVER_INFO = {
+  name: "trust-ledger-os-mcp",
+  version: "0.1.2",
+} as const;
+
 export const mcpManifest = {
   product: {
     name: "Trust Ledger OS",
@@ -8,6 +13,45 @@ export const mcpManifest = {
   phases: ["foundation", "framework-benchmark", "research-reasoning", "production-controls"],
   packages: ["@cubiczan/trust-ledger-os", "trust-ledger-os", "trust-ledger-os-mcp"],
 } as const;
+
+export const mcpPhaseDetails = [
+  {
+    id: "foundation",
+    title: "Foundation kit",
+    summary: "Shared agent glossary, decision tree, model/tool matrix, and prompt skeletons.",
+    packageRoot: "foundation-kit/",
+    route: "/foundation",
+  },
+  {
+    id: "framework-benchmark",
+    title: "Framework benchmark suite",
+    summary: "Framework profiles, comparison cases, and scoring rubric.",
+    packageRoot: "framework-benchmark-suite/",
+    route: "/framework-benchmark",
+  },
+  {
+    id: "research-reasoning",
+    title: "Research and reasoning kit",
+    summary: "Planner, researcher, validator, synthesizer, and reusable reasoning patterns.",
+    packageRoot: "research-reasoning-kit/",
+    route: "/research-reasoning",
+  },
+  {
+    id: "production-controls",
+    title: "Production controls kit",
+    summary: "Eval harness, drift monitor, guardrails, and release gate.",
+    packageRoot: "production-controls-kit/",
+    route: "/production-controls",
+  },
+] as const;
+
+export const MCP_TOOL_NAMES = [
+  "get_manifest",
+  "list_phases",
+  "get_phase",
+  "list_routes",
+  "list_packages",
+] as const;
 
 export const mcpToolCatalog = [
   {
