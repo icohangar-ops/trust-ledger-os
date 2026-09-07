@@ -2,8 +2,9 @@
   "$schema": "https://openapi.vercel.sh/vercel.json",
   "framework": null,
   "fluid": true,
-  "installCommand": "npm ci",
-  "buildCommand": "npm run build",
+  "installCommand": "npm ci && npm run build",
+  "buildCommand": null,
+  "outputDirectory": null,
   "rewrites": [
     { "source": "/mcp", "destination": "/api" },
     { "source": "/health", "destination": "/api" },
