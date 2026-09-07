@@ -21,7 +21,7 @@ type JsonRpcResponse = {
   error?: { code: number; message: string; data?: unknown };
 };
 
-let buffer = Buffer.alloc(0);
+let buffer: Buffer = Buffer.alloc(0);
 
 /** Glama mcp-proxy expects NDJSON on stdout (no Content-Length). Do not log to stdout. */
 function writeMessage(message: JsonRpcResponse) {
@@ -158,7 +158,7 @@ function tryParseFrames() {
   while (true) {
     const parsed = tryReadMcpMessage(buffer);
     if (!parsed) return;
-    buffer = parsed.rest;
+    buffer = Buffer.from(parsed.rest);
     try {
       handleRequest(parsed.value);
     } catch (error) {
@@ -168,6 +168,7 @@ function tryParseFrames() {
 }
 
 stdin.on("data", (chunk) => {
-  buffer = Buffer.concat([buffer, Buffer.isBuffer(chunk) ? chunk : Buffer.from(chunk)]);
+  const next = Buffer.isBuffer(chunk) ? Buffer.from(chunk) : Buffer.from(chunk);
+  buffer = Buffer.concat([buffer, next]);
   tryParseFrames();
 });
