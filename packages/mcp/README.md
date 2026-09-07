@@ -107,16 +107,17 @@ This is a **new** Node MCP project. Do **not** point it at:
 | Framework | Other / None (`vercel.json` sets `"framework": null`) |
 | Fluid Compute | on (`"fluid": true`) |
 | Install | `npm ci && npm run build` (tsc writes `dist/` for `api/index.mjs`) |
-| Build / Output | both `null` — Fluid/API-only, no static `public/` directory |
+| Build | `null` — do not run a second build that would wipe `dist/` |
+| Output Directory | `public` (checked-in empty folder; Vercel requires this path after build) |
 | Production env | `MCP_BEARER_TOKEN` (required for the public Glama connector test profile) |
 
 `vercel.json` rewrites `/mcp`, `/health`, and `/healthz` to `api/index.mjs`
-(Fluid Compute `fetch` handler). `maxDuration` is 60s. A custom
-`buildCommand` with `framework: null` makes Vercel default
-`outputDirectory` to `public` and fail the deploy when that folder is
-absent. Compile TypeScript during install instead, and set
-`buildCommand` / `outputDirectory` to `null` so this stays a function
-deploy (`includeFiles: dist/**`), not a static site.
+(Fluid Compute `fetch` handler). `maxDuration` is 60s. With
+`framework: null`, Vercel still requires `outputDirectory` `public` and
+fails if that folder is missing (`null` is ignored). Keep an empty
+`public/` in the repo, compile TypeScript during install, and leave
+`buildCommand` null so `dist/` stays available for
+`includeFiles: dist/**`.
 
 ```bash
 npx vercel --cwd packages/mcp
