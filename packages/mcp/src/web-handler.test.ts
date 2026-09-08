@@ -78,6 +78,10 @@ describe("handleWebRequest", () => {
     assert.equal(get.status, 405);
     const missing = await handleWebRequest(request("/nope"), { env: {} });
     assert.equal(missing.status, 404);
+    const wellKnown = await handleWebRequest(request("/.well-known/glama.json"), {
+      env: { MCP_BEARER_TOKEN: "smoke-token" },
+    });
+    assert.equal(wellKnown.status, 404);
   });
 
   it("accepts initialized notifications with 202", async () => {
