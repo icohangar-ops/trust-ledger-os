@@ -108,15 +108,15 @@ This is a **new** Node MCP project. Do **not** point it at:
 | Fluid Compute | on (`"fluid": true`) |
 | Install | `npm ci && npm run build` (tsc writes `dist/` for `api/index.mjs`) |
 | Build | `null` — do not run a second build that would wipe `dist/` |
-| Output Directory | `public` (checked-in empty folder; Vercel requires this path after build) |
+| Output Directory | `public` (static Glama HTTP claim at `/.well-known/glama.json`) |
 | Production env | `MCP_BEARER_TOKEN` (required for the public Glama connector test profile) |
 
-`vercel.json` rewrites `/mcp`, `/health`, and `/healthz` to `api/index.mjs`
-(Fluid Compute `fetch` handler). `maxDuration` is 60s. With
-`framework: null`, Vercel still requires `outputDirectory` `public` and
-fails if that folder is missing (`null` is ignored). Keep an empty
-`public/` in the repo, compile TypeScript during install, and leave
-`buildCommand` null so `dist/` stays available for
+`vercel.json` rewrites only `/mcp`, `/health`, and `/healthz` to
+`api/index.mjs` (Fluid Compute `fetch` handler). `/.well-known/*` is not
+rewritten — Vercel reserves that path, and the claim file is served as
+static output from `public/`. `maxDuration` is 60s. With `framework: null`,
+Vercel requires `outputDirectory` `public`. Compile TypeScript during
+install and leave `buildCommand` null so `dist/` stays available for
 `includeFiles: dist/**`.
 
 ```bash
@@ -129,11 +129,17 @@ Public URLs (from Vercel, not this repo):
 
 - MCP: `https://$VERCEL_PROJECT_PRODUCTION_URL/mcp`
 - Health: `https://$VERCEL_PROJECT_PRODUCTION_URL/health`
+- Glama HTTP claim (no auth): `https://$VERCEL_PROJECT_PRODUCTION_URL/.well-known/glama.json`
 
 Disable **Deployment Protection** (Vercel Authentication) on production so
-Glama can reach `/mcp` with only the Bearer header.
+Glama can reach `/mcp` with only the Bearer header and can fetch the public
+claim file at `/.well-known/glama.json`.
 
 ## Glama connector fields
+
+The HTTP ownership challenge file is checked in at
+`public/.well-known/glama.json` and must stay public on the connector
+origin (`/.well-known/glama.json`). Bearer auth applies only to `/mcp`.
 
 After the Vercel production URL exists, Add MCP Server → **Connector**:
 
