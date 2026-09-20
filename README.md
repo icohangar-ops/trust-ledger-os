@@ -42,6 +42,7 @@ Mirrors:
 - `/framework-benchmark` phase 2 scaffold
 - `/research-reasoning` phase 3 scaffold
 - `/production-controls` phase 4 scaffold
+- `/decisions` decision ledger (CHP decision substrate) · `GET /api/decisions` live read
 
 ## Phase Packages
 
@@ -49,6 +50,7 @@ Mirrors:
 - `framework-benchmark-suite/`: framework profiles, comparison cases, and scoring rubric.
 - `research-reasoning-kit/`: research pipeline stages and reusable reasoning patterns.
 - `production-controls-kit/`: eval harness, drift monitoring, guardrails, and release gate scaffold.
+- `decision-substrate/`: CHP decision records — R0 gate, deterministic foundation scoring (guardrails 40 / bounded result 30 / parity 30), configurable per-domain floors (general 70, finance 100, blockchain/DeFi 85), substrate-enforced human locks (`TRUST_LEDGER_CHP_REQUIRE_HUMAN_LOCK`, default on), and an append-only JSONL ledger sealed with SHA-256 `body_sha256` revalidated on every read. TypeScript port of the primitive proven in erp-control-plane; canonical JSON via `@cubiczan/chp`.
 
 ## Distribution Surfaces
 
@@ -119,6 +121,7 @@ npm run build
 ```text
 trust-ledger-os/
 ├── app/
+├── decision-substrate/
 ├── docs/
 ├── foundation-kit/
 ├── framework-benchmark-suite/

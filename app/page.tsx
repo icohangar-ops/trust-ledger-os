@@ -42,6 +42,11 @@ const roadmap = [
     title: 'Production controls',
     text: 'Add eval harnesses, drift checks, tracing, guardrails, and human approval gates before release.',
   },
+  {
+    phase: 'Phase 5',
+    title: 'Decision substrate',
+    text: 'Record every promote / refuse / lock as a CHP decision record: R0 gate, deterministic scoring, per-domain floors, and human locks on an append-only sealed ledger.',
+  },
 ];
 
 export default function Page() {
@@ -157,6 +162,11 @@ export default function Page() {
                 Open the production controls scaffold
               </a>
             </p>
+          <p>
+            <a href="/decisions" style={{ color: 'var(--accent)' }}>
+              Open the decision ledger
+            </a>
+          </p>
           </article>
         </section>
 

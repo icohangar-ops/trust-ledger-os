@@ -28,6 +28,13 @@ import {
   productionControlAcceptanceCriteria,
   productionControlScaffold,
 } from "../production-controls-kit/src";
+import {
+  BOUNDED_RESULT_POINTS,
+  DEFAULT_DOMAIN_FLOORS,
+  GUARDRAIL_POINTS,
+  PARITY_POINTS,
+  REQUIRE_HUMAN_LOCK_ENV,
+} from "../decision-substrate/dist/index.js";
 
 export const trustLedgerOSManifest = {
   product: {
@@ -42,6 +49,7 @@ export const trustLedgerOSManifest = {
     { path: "/framework-benchmark", label: "Framework benchmark scaffold" },
     { path: "/research-reasoning", label: "Research and reasoning scaffold" },
     { path: "/production-controls", label: "Production controls scaffold" },
+    { path: "/decisions", label: "Decision ledger" },
   ],
   phases: [
     {
@@ -71,6 +79,13 @@ export const trustLedgerOSManifest = {
       summary: "Eval harness, drift monitor, guardrails, and release gate.",
       packageRoot: "production-controls-kit/",
       route: "/production-controls",
+    },
+    {
+      id: "decision-substrate",
+      title: "Decision substrate (CHP)",
+      summary: "CHP decision records: R0 gate, deterministic foundation scoring, per-domain floors, human locks, and an append-only sealed ledger.",
+      packageRoot: "decision-substrate/",
+      route: "/decisions",
     },
   ],
   packageCatalog: [
@@ -123,6 +138,16 @@ export const trustLedgerOSManifest = {
       guardrails: guardrailRules,
       scaffold: productionControlScaffold,
       acceptanceCriteria: productionControlAcceptanceCriteria,
+    },
+    decisionSubstrate: {
+      domainFloors: DEFAULT_DOMAIN_FLOORS,
+      foundationWeights: {
+        guardrails: GUARDRAIL_POINTS,
+        boundedResult: BOUNDED_RESULT_POINTS,
+        parity: PARITY_POINTS,
+      },
+      requireHumanLockEnv: REQUIRE_HUMAN_LOCK_ENV,
+      ledgerPath: "state/decisions.jsonl",
     },
   },
 } as const;
